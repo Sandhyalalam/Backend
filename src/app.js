@@ -1,19 +1,21 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require("express");
+const connectToDB = require("./configs/db");
+const taskRoute = require("./routes/taskRoutes");
 const app = express();
 
-app.get('/',(req,res)=>
-{
-    res.send("Server started");
-});
+app.use(express.json());
+app.use("/api/task", taskRoute);
 
-app.listen(4000, async ()=>
-{
+app.get("/", (req, res) => {
+    res.send("Sever is Started");
+})
+
+app.listen(7000, async () => {
     console.log("Server is working");
 
-    //connect to DB
+    // connec to DB
+    connectToDB()
 
-    await mongoose.connect("mongodb+srv://db_user:sandhya16@task.vpwvf0r.mongodb.net/task");
-    console.log(mongoose.connection.name);
-    
-});
+})
+
+
